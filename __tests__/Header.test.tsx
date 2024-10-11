@@ -6,5 +6,5 @@ import { Header } from '../src/components/Header.tsx';
 
 test("Headerと表示されるか", () => {
     render(<Header/>)
-    expect(screen.getByText("Header")).toBeInTheDocument();
+    expect(screen.getByText("TODO APP")).toBeInTheDocument();
 })
