@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 
 import { Header } from '../src/components/Header.tsx';
 
-test("Headerと表示されるか", () => {
-    render(<Header/>)
+test("TODO APPと表示されるか", () => {
+    render(<Header todos={[{id:"000", title: "test", completed: false, content: "test_todo"}]}/>)
     expect(screen.getByText("TODO APP")).toBeInTheDocument();
 })

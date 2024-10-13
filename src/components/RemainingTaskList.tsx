@@ -1,7 +1,11 @@
 import React from 'react';
 
-export const RemainingTaskList = () => {
+type RemainingTaskListProps = {
+    remainingTasksCount: number;
+}
+
+export const RemainingTaskList:React.FC<RemainingTaskListProps> = ({ remainingTasksCount }) => {
     return (
-        <h1>残りのタスクを表示する予定</h1>
+        <h1>残り{remainingTasksCount}</h1>
     )
 }
