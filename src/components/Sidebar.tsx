@@ -1,17 +1,17 @@
 import React from 'react';
-import { TODO } from '../App.tsx';
-import { AddTODOButton } from './AddTODO.tsx';
+import { TODO, Modes } from '../App.tsx';
+import { AddButton } from './AddButton.tsx';
 
 type sidebarProps = {
     todos: TODO[];
-    setTodos: React.Dispatch<React.SetStateAction<TODO[]>>;
+    setMode: React.Dispatch<React.SetStateAction<Modes>>;
 }
 
-export const Sidebar:React.FC<sidebarProps> = ({ todos, setTodos }) => {
+export const Sidebar:React.FC<sidebarProps> = ({ todos, setMode}) => {
   return (
     <div className="w-44 text-white p-4" style={{background: "#111111"}}>
       <h1 className="text-2xl font-bold mb-4">Task</h1>
-      <AddTODOButton todos={todos} setTodos={setTodos}/>
+      <AddButton todos={todos} setMode={setMode}/>
       <nav>
         <ul>
             {todos.map(todo => (
