@@ -4,6 +4,7 @@ import { Sidebar } from './components/Sidebar.tsx'
 import { View } from './components/View.tsx';
 import { AddTodo } from './components/AddTodo.tsx';
 import './index.css';
+import { Edit } from './components/Edit.tsx';
 
 export type TODO = {
   id: string;
@@ -25,9 +26,10 @@ const App = () => {
       <Header todos={todos} />
       <div className="flex h-screen">
       <Sidebar todos={todos} setMode={setMode} setSelectedTodoId={setSelectedTodoId}/>
-      { mode == "view" && selectedTodo && <View todo={selectedTodo}/>}
-      { mode == "view" && !selectedTodo && <View todo={{id:"-1", title: "None", completed: true, content: "No todo selected"}}/>}
+      { mode == "view" && selectedTodo && <View todo={selectedTodo} setMode={setMode}/>}
+      { mode == "view" && !selectedTodo && <View todo={{id:"-1", title: "None", completed: true, content: "No todo selected"}} setMode={setMode}/>}
       { mode == "add" && <AddTodo todos={todos} setTodos={setTodos} setMode={setMode}/>}
+      { mode == "edit" && <Edit todos={todos} setMode={setMode} setTodos={setTodos}/> }
       </div>
     </div>
   );

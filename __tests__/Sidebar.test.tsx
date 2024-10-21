@@ -13,7 +13,7 @@ test("TODOの配列を渡してそれのタイトルが表示されるか", () =
         {id: "4", title: "test4", completed: true, content: "test4"},
         {id: "5", title: "test5", completed: false, content: "test5"},
     ];
-    render(<Sidebar todos={todos} setTodos={jest.fn}/>);
+    render(<Sidebar todos={todos} setMode={jest.fn} setSelectedTodoId={jest.fn}/>);
     todos.forEach(todo => {
         expect(screen.getByText(todo.title)).toBeInTheDocument();
     });
