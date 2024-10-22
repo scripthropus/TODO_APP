@@ -29,7 +29,7 @@ const App = () => {
       { mode == "view" && selectedTodo && <View todo={selectedTodo} setMode={setMode}/>}
       { mode == "view" && !selectedTodo && <View todo={{id:"-1", title: "None", completed: true, content: "No todo selected"}} setMode={setMode}/>}
       { mode == "add" && <AddTodo todos={todos} setTodos={setTodos} setMode={setMode}/>}
-      { mode == "edit" && <Edit todos={todos} setMode={setMode} setTodos={setTodos}/> }
+      { mode == "edit" && selectedTodo && <Edit currentTodoId={selectedTodo.id} todos={todos} setMode={setMode} setTodos={setTodos}/> }
       </div>
     </div>
   );
