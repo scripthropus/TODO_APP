@@ -3,6 +3,7 @@
 *.local
 *.log*
 coverage/
+.env
 
 # Dist
 node_modules
