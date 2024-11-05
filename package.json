@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "rsbuild dev --open",
     "DB": "docker compose up -d",
+    "server:start": "npx tsc server.ts --outDir dist/ && node dist/server.js",
     "build": "rsbuild build",
     "preview": "rsbuild preview",
     "test": "jest"

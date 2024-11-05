@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header.tsx'
 import { Sidebar } from './components/Sidebar.tsx'
 import { View } from './components/View.tsx';
@@ -15,10 +15,43 @@ export type TODO = {
 
 export type Modes= "view" | "add" | "edit";
 
+const SERVER_URL = "http://localhost:3001";
+
 const App = () => {
-  const [todos, setTodos] = useState<TODO[]>([{id:"000", title: "test", completed: false, content: "test_todo"}]);
-  const [selectedTodoId, setSelectedTodoId] = useState<TODO['id']>(todos[0].id);
+  const [todos, setTodos] = useState<TODO[]>([]);
+  const [selectedTodoId, setSelectedTodoId] = useState<TODO['id']>("");
   const [mode, setMode] = useState<Modes>("view");
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const serverConnectionTest = async () => {
+    try {
+      const res = await fetch(`${SERVER_URL}/`)
+      const responseTest = await res.json();
+      console.log(responseTest);
+    } catch (error) {
+      console.error("サーバーとの通信が失敗しました");
+      console.error(error);
+    }
+  }
+
+  serverConnectionTest();
+
+  const fetchTodos = async () => {
+    try {
+      const res = await fetch(`${SERVER_URL}/todos`)
+      const data = await res.json();
+      setTodos(data);
+      if (data.length > 0 && !selectedTodo) {
+        setSelectedTodoId(data[0].id);
+      }
+    } catch(error) {
+      console.error("DBからTODOを取得する段階でのエラー");
+      console.error(error);
+    }
+  }
 
   const selectedTodo = todos.find(todo => todo.id === selectedTodoId);
  return (
