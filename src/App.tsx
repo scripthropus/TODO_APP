@@ -15,7 +15,7 @@ export type TODO = {
 
 export type Modes= "view" | "add" | "edit";
 
-const SERVER_URL = "http://localhost:3001";
+export const SERVER_URL = "http://localhost:3001";
 
 const App = () => {
   const [todos, setTodos] = useState<TODO[]>([]);

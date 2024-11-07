@@ -1,5 +1,5 @@
 import React from 'react';
-import { TODO, Modes } from '../App';
+import { TODO, Modes, SERVER_URL } from '../App';
 
 type AddTodoProps = {
     todos: TODO[];
@@ -8,7 +8,7 @@ type AddTodoProps = {
 }
 
 export const AddTodo:React.FC<AddTodoProps> = ( { todos, setTodos, setMode }) => {
-    const handleSetTodos = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSetTodos = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as typeof e.target & {
             title: { value: string };
@@ -20,7 +20,26 @@ export const AddTodo:React.FC<AddTodoProps> = ( { todos, setTodos, setMode }) =>
             content: target.content.value,
             completed: false,
         }
-        setTodos([...todos, newTodo]);
+        try {
+            const res= await fetch(`${SERVER_URL}/todos`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newTodo),
+            });
+
+            if (!res.ok) {
+                throw new Error('TODOの追加に失敗しました');
+            }
+
+            const savedTodo = await res.json();
+            setTodos([...todos, newTodo]);
+        }catch (error) {
+            console.error(error);
+            alert("TODOの追加に失敗しました");
+        }
+
         setMode("view");
     }
     return(
