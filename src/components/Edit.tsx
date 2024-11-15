@@ -1,5 +1,5 @@
 import React from 'react';
-import { TODO, Modes } from '../App';
+import { TODO, Modes, SERVER_URL } from '../App';
 
 type EditProps = {
     currentTodoId: TODO["id"];
@@ -10,7 +10,7 @@ type EditProps = {
 
 export const Edit:React.FC<EditProps> = ({ currentTodoId,todos, setTodos, setMode }) => {
 
-    const handleSetTodos = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSetTodos = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as typeof e.target & {
             title: { value: string };
@@ -23,21 +23,37 @@ export const Edit:React.FC<EditProps> = ({ currentTodoId,todos, setTodos, setMod
             completed: false,
         };
 
-        setTodos(todos.map(todo => {
-            if(todo.id === currentTodoId) {
-                return newTodo;
-            } else {
-                return todo;
-            }
-        }));
+        try {
+            const res = await fetch(`${SERVER_URL}/todos/${currentTodoId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: target.title.value,
+                    content: target.content.value,
+                    completed: false
+                })
+            });
+
+            if (!res.ok){ throw new Error('TODOの更新に失敗しました');}
+            const updatedTodo = await res.json();
+            setTodos(todos.map(todo => 
+                todo.id === currentTodoId ? updatedTodo : todo
+            ));
+
+        } catch (error) {
+            console.error(error);
+            alert("TODOの更新に失敗しました");
+        }
+     
         setMode("view");
     }
 
     return (<div className='flex flex-col w-full h-full justify-center items-center'>
-    <h1 className=" text-white">実装中</h1>
     <h1 className=" text-white">TODOの変更</h1>
     <form onSubmit={handleSetTodos} className='flex flex-col'>
-        <h1 className='text-3xl text-white'>追加するモード</h1>
+        <h1 className='text-3xl text-white'>編集モード</h1>
         <input type="text"
             name="title"
             placeholder='タイトルを入力してください'
@@ -51,7 +67,7 @@ export const Edit:React.FC<EditProps> = ({ currentTodoId,todos, setTodos, setMod
         <button 
             type="submit"
             className='bg-white border-spacing-8'
-        >追加</button>
+        >変更の確定</button>
     </form>
     <button
     className='text-white'
