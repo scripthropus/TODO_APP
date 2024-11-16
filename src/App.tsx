@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header.tsx'
 import { Sidebar } from './components/Sidebar.tsx'
 import { View } from './components/View.tsx';
 import { AddTodo } from './components/AddTodo.tsx';
@@ -56,7 +55,6 @@ const App = () => {
   const selectedTodo = todos.find(todo => todo.id === selectedTodoId);
  return (
     <div className="flex flex-col h-screen w-screen bg-black">
-      <Header todos={todos} />
       <div className="flex h-screen">
       <Sidebar todos={todos} setMode={setMode} setSelectedTodoId={setSelectedTodoId}/>
       { mode == "view" && selectedTodo && <View todo={selectedTodo} setMode={setMode}/>}

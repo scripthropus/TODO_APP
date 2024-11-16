@@ -6,6 +6,8 @@ type RemainingTaskListProps = {
 
 export const RemainingTaskList:React.FC<RemainingTaskListProps> = ({ remainingTasksCount }) => {
     return (
-        <h1>残り{remainingTasksCount}</h1>
+        <div
+        className="text-white font-bold p-2"
+        >残り{remainingTasksCount}</div>
     )
 }

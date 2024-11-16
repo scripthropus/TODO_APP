@@ -12,7 +12,7 @@ export const AddButton:React.FC<AddTODOProps> = ({ setMode, todos }) => {
 
     return(
     <>
-    <button className="bg-white text-black"
+    <button className="bg-white text-black font-bold"
     onClick={handleMode}
     >
         タスクの追加
